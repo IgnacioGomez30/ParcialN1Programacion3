@@ -68,36 +68,37 @@ public class AdnService {
         int size = adn.length;
         int secuenciasEncontradas = 0;  // Contador de secuencias encontradas
 
-        for (int i = 0; i < size; i += 2) {  // Avanzar de dos en dos filas
-            for (int j = 0; j < size; j += 2) {  // Avanzar de dos en dos columnas
-                // Revisión horizontal discontinua
-                if (j <= size - 4 && adn[i].charAt(j) == adn[i].charAt(j + 2)) {
-                    // Revisa los elementos contiguos
-                    if (adn[i].charAt(j) == adn[i].charAt(j + 1) && adn[i].charAt(j) == adn[i].charAt(j + 3)) {
+        for (int i = 0; i < size; i++) {  // Iterar por cada fila
+            for (int j = 0; j < size; j++) {  // Iterar por cada columna
+                // Comprobar solo si hay suficiente espacio para buscar
+                if (j <= size - 4) {  // Revisión horizontal
+                    if (adn[i].charAt(j) == adn[i].charAt(j + 1) &&
+                            adn[i].charAt(j) == adn[i].charAt(j + 2) &&
+                            adn[i].charAt(j) == adn[i].charAt(j + 3)) {
                         secuenciasEncontradas++;
                     }
                 }
 
-                // Revisión vertical discontinua
-                if (i <= size - 4 && adn[i].charAt(j) == adn[i + 2].charAt(j)) {
-                    // Revisa los elementos contiguos
-                    if (adn[i].charAt(j) == adn[i + 1].charAt(j) && adn[i].charAt(j) == adn[i + 3].charAt(j)) {
+                if (i <= size - 4) {  // Revisión vertical
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j) &&
+                            adn[i].charAt(j) == adn[i + 2].charAt(j) &&
+                            adn[i].charAt(j) == adn[i + 3].charAt(j)) {
                         secuenciasEncontradas++;
                     }
                 }
 
-                // Revisión diagonal discontinua
-                if (i <= size - 4 && j <= size - 4 && adn[i].charAt(j) == adn[i + 2].charAt(j + 2)) {
-                    // Revisa los elementos contiguos
-                    if (adn[i].charAt(j) == adn[i + 1].charAt(j + 1) && adn[i].charAt(j) == adn[i + 3].charAt(j + 3)) {
+                if (i <= size - 4 && j <= size - 4) {  // Revisión diagonal
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j + 1) &&
+                            adn[i].charAt(j) == adn[i + 2].charAt(j + 2) &&
+                            adn[i].charAt(j) == adn[i + 3].charAt(j + 3)) {
                         secuenciasEncontradas++;
                     }
                 }
 
-                // Revisión diagonal invertida discontinua
-                if (i <= size - 4 && j >= 3 && adn[i].charAt(j) == adn[i + 2].charAt(j - 2)) {
-                    // Revisa los elementos contiguos
-                    if (adn[i].charAt(j) == adn[i + 1].charAt(j - 1) && adn[i].charAt(j) == adn[i + 3].charAt(j - 3)) {
+                if (i <= size - 4 && j >= 3) {  // Revisión diagonal invertida
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j - 1) &&
+                            adn[i].charAt(j) == adn[i + 2].charAt(j - 2) &&
+                            adn[i].charAt(j) == adn[i + 3].charAt(j - 3)) {
                         secuenciasEncontradas++;
                     }
                 }
