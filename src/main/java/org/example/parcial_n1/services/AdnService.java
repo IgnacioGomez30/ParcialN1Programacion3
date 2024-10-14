@@ -61,15 +61,25 @@ public class AdnService {
         int size = adn.length;
         int secuenciasEncontradas = 0;  // Contador de secuencias encontradas
 
-        for (int i = 0; i < size && secuenciasEncontradas < 2; i++) {
-            for (int j = 0; j < size && secuenciasEncontradas < 2; j++) {
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < size; j++) {
                 // Verificar secuencias en las cuatro direcciones
-                if (verificarHorizontal(adn, i, j) || verificarVertical(adn, i, j) ||
-                        verificarDiagonalDerecha(adn, i, j) || verificarDiagonalIzquierda(adn, i, j)) {
+                if (verificarHorizontal(adn, i, j)) {
                     secuenciasEncontradas++;
-                    if (secuenciasEncontradas >= 2) {
-                        return true;  // Mutante si se encuentran al menos 2 secuencias
-                    }
+                }
+                if (verificarVertical(adn, i, j)) {
+                    secuenciasEncontradas++;
+                }
+                if (verificarDiagonalDerecha(adn, i, j)) {
+                    secuenciasEncontradas++;
+                }
+                if (verificarDiagonalIzquierda(adn, i, j)) {
+                    secuenciasEncontradas++;
+                }
+
+                // Si ya hemos encontrado al menos 2 secuencias, podemos devolver true
+                if (secuenciasEncontradas >= 2) {
+                    return true;  // Mutante si se encuentran al menos 2 secuencias
                 }
             }
         }
