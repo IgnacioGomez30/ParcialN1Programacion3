@@ -59,32 +59,37 @@ public class AdnService {
 
     private boolean detectMutant(String[] adn) {
         int size = adn.length;
-        int secuenciasEncontradas = 0;  // Contador de secuencias encontradas
+        int secuenciasEncontradas = 0;
 
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
-                // Verificar secuencias en las cuatro direcciones
                 if (verificarHorizontal(adn, i, j)) {
                     secuenciasEncontradas++;
+                    System.out.println("Secuencia horizontal encontrada en [" + i + "," + j + "]");
                 }
                 if (verificarVertical(adn, i, j)) {
                     secuenciasEncontradas++;
+                    System.out.println("Secuencia vertical encontrada en [" + i + "," + j + "]");
                 }
                 if (verificarDiagonalDerecha(adn, i, j)) {
                     secuenciasEncontradas++;
+                    System.out.println("Secuencia diagonal derecha encontrada en [" + i + "," + j + "]");
                 }
                 if (verificarDiagonalIzquierda(adn, i, j)) {
                     secuenciasEncontradas++;
+                    System.out.println("Secuencia diagonal izquierda encontrada en [" + i + "," + j + "]");
                 }
 
-                // Si ya hemos encontrado al menos 2 secuencias, podemos devolver true
                 if (secuenciasEncontradas >= 2) {
-                    return true;  // Mutante si se encuentran al menos 2 secuencias
+                    System.out.println("Mutante detectado");
+                    return true;
                 }
             }
         }
-        return false;  // Humano si no se encuentran suficientes secuencias
+        System.out.println("No se encontraron suficientes secuencias. Humano detectado.");
+        return false;
     }
+
 
     private boolean verificarHorizontal(String[] adn, int x, int y) {
         if (y + 3 < adn.length) {
