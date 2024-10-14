@@ -36,6 +36,8 @@ public class AdnService {
         Adn newAdn = Adn.builder().adn(adnSequence).isMutant(isMutant).build();
         adnRepository.save(newAdn);
 
+        System.out.println("ADN guardado en la base de datos: " + newAdn);
+
         return isMutant;
     }
 
@@ -59,79 +61,45 @@ public class AdnService {
 
     private boolean detectMutant(String[] adn) {
         int size = adn.length;
-        int secuenciasEncontradas = 0;
+        int secuenciasEncontradas = 0;  // Contador de secuencias encontradas
 
-        for (int i = 0; i < size; i++) {
-            for (int j = 0; j < size; j++) {
-                if (verificarHorizontal(adn, i, j)) {
-                    secuenciasEncontradas++;
-                    System.out.println("Secuencia horizontal encontrada en [" + i + "," + j + "]");
-                }
-                if (verificarVertical(adn, i, j)) {
-                    secuenciasEncontradas++;
-                    System.out.println("Secuencia vertical encontrada en [" + i + "," + j + "]");
-                }
-                if (verificarDiagonalDerecha(adn, i, j)) {
-                    secuenciasEncontradas++;
-                    System.out.println("Secuencia diagonal derecha encontrada en [" + i + "," + j + "]");
-                }
-                if (verificarDiagonalIzquierda(adn, i, j)) {
-                    secuenciasEncontradas++;
-                    System.out.println("Secuencia diagonal izquierda encontrada en [" + i + "," + j + "]");
+        for (int i = 0; i < size; i += 2) {  // Avanzar de dos en dos filas
+            for (int j = 0; j < size; j += 2) {  // Avanzar de dos en dos columnas
+                // Revisión horizontal discontinua
+                if (j <= size - 4 && adn[i].charAt(j) == adn[i].charAt(j + 2)) {
+                    if (adn[i].charAt(j) == adn[i].charAt(j + 1) && adn[i].charAt(j) == adn[i].charAt(j + 3)) {
+                        secuenciasEncontradas++;
+                    }
                 }
 
+                // Revisión vertical discontinua
+                if (i <= size - 4 && adn[i].charAt(j) == adn[i + 2].charAt(j)) {
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j) && adn[i].charAt(j) == adn[i + 3].charAt(j)) {
+                        secuenciasEncontradas++;
+                    }
+                }
+
+                // Revisión diagonal discontinua
+                if (i <= size - 4 && j <= size - 4 && adn[i].charAt(j) == adn[i + 2].charAt(j + 2)) {
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j + 1) && adn[i].charAt(j) == adn[i + 3].charAt(j + 3)) {
+                        secuenciasEncontradas++;
+                    }
+                }
+
+                // Revisión diagonal invertida discontinua
+                if (i <= size - 4 && j >= 3 && adn[i].charAt(j) == adn[i + 2].charAt(j - 2)) {
+                    if (adn[i].charAt(j) == adn[i + 1].charAt(j - 1) && adn[i].charAt(j) == adn[i + 3].charAt(j - 3)) {
+                        secuenciasEncontradas++;
+                    }
+                }
+
+                // Si encontramos al menos 2 secuencias, consideramos que es un mutante
                 if (secuenciasEncontradas >= 2) {
-                    System.out.println("Mutante detectado");
                     return true;
                 }
             }
         }
-        System.out.println("No se encontraron suficientes secuencias. Humano detectado.");
-        return false;
-    }
 
-
-    private boolean verificarHorizontal(String[] adn, int x, int y) {
-        if (y + 3 < adn.length) {
-            if (adn[x].charAt(y) == adn[x].charAt(y + 1) &&
-                    adn[x].charAt(y) == adn[x].charAt(y + 2) &&
-                    adn[x].charAt(y) == adn[x].charAt(y + 3)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean verificarVertical(String[] adn, int x, int y) {
-        if (x + 3 < adn.length) {
-            if (adn[x].charAt(y) == adn[x + 1].charAt(y) &&
-                    adn[x].charAt(y) == adn[x + 2].charAt(y) &&
-                    adn[x].charAt(y) == adn[x + 3].charAt(y)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean verificarDiagonalDerecha(String[] adn, int x, int y) {
-        if (x + 3 < adn.length && y + 3 < adn.length) {
-            if (adn[x].charAt(y) == adn[x + 1].charAt(y + 1) &&
-                    adn[x].charAt(y) == adn[x + 2].charAt(y + 2) &&
-                    adn[x].charAt(y) == adn[x + 3].charAt(y + 3)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private boolean verificarDiagonalIzquierda(String[] adn, int x, int y) {
-        if (x + 3 < adn.length && y - 3 >= 0) {
-            if (adn[x].charAt(y) == adn[x + 1].charAt(y - 1) &&
-                    adn[x].charAt(y) == adn[x + 2].charAt(y - 2) &&
-                    adn[x].charAt(y) == adn[x + 3].charAt(y - 3)) {
-                return true;
-            }
-        }
         return false;
     }
 }
