@@ -9,7 +9,7 @@ La API está hosteada en Render:
 URL: [https://parcialn1programacion3-1.onrender.com](https://parcialn1programacion3-1.onrender.com)
 
 ## Diagrama de Secuencia
-![Diagrama de Secuencia](diagrama.png) <!-- Asegúrate de tener la imagen en la ruta correcta -->
+![Diagrama de Secuencia](diagrama.png)
 
 ## Construida con:
 - Spring Boot
