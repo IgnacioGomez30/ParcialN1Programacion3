@@ -24,7 +24,7 @@ Se envian request a través de Postman.
 ### POST
 [https://parcialn1programacion3-1.onrender.com/mutant](https://parcialn1programacion3-1.onrender.com/mutant)
 
-### GET
+Para ver las stats de debe ingresar a la URL:
 [https://parcialn1programacion3-1.onrender.com/stats](https://parcialn1programacion3-1.onrender.com/stats)
 
 Endpoint /mutant/
